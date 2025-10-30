@@ -3,16 +3,26 @@ services:
   service1:
     build: ./service1
     ports:
-      - "5000:5000"
+      - "5000"
     networks:
       - microservices_network
 
   service2:
     build: ./service2
     ports:
-      - "5001:5001"
+      - "5001"
     networks:
       - microservices_network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - microservices_network
+    depends_on:
+      - service1
+      - service2
 
 networks:
   microservices_network:

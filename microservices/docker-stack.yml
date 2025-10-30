@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  nginx:
+    image: kirus1930/microservices-nginx
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    ports:
+      - "80:80"
+    networks:
+      - microservices_network
+
+  service1:
+    image: kirus1930/microservices-service1
+    deploy:
+      replicas: 3
+    networks:
+      - microservices_network
+
+  service2:
+    image: kirus1930/microservices-service2
+    deploy:
+      replicas: 2
+    networks:
+      - microservices_network
+
+networks:
+  microservices_network:
+    driver: overlay
